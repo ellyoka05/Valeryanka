@@ -38,14 +38,14 @@ public class PlayerLivesUI : MonoBehaviour
 
         if (currentLives <= 0)
         {
-        
-            print("Game Over!");
+            FindObjectOfType<GameOverManager>().ShowGameOver(); // Trigger Game Over
         }
         else
         {
             StartCoroutine(InvulnerabilityPeriod());
         }
     }
+
 
     private System.Collections.IEnumerator InvulnerabilityPeriod()
     {
