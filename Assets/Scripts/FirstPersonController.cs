@@ -35,7 +35,6 @@ public class FirstPersonController : MonoBehaviour
     void _Start()
     {
         controller = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
         startPosition = transform.position;
 
         GameObject groundCheckObj = new GameObject("GroundCheck");
