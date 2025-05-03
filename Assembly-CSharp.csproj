@@ -63,9 +63,11 @@
     <Compile Include="Assets/Scripts/GameOverManage.cs" />
     <Compile Include="Assets/Scripts/RotatingSpikes.cs" />
     <Compile Include="Assets/Scripts/MainMenuManager.cs" />
+    <Compile Include="Assets/Scripts/BridgeController.cs" />
     <Compile Include="Assets/Scripts/PlayerLivesUI.cs" />
     <Compile Include="Assets/Scripts/MovingSpikes.cs" />
     <Compile Include="Assets/Scripts/AudioManager.cs" />
+    <Compile Include="Assets/Scripts/SpikeWall.cs" />
     <Compile Include="Assets/Scripts/FirstPersonController.cs" />
   </ItemGroup>
   <ItemGroup>
