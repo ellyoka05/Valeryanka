@@ -32,6 +32,9 @@ public class FirstPersonController : MonoBehaviour
 
     void Start()
     {
+        controller = GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
+        startPosition = transform.position;
         rotatingPlatforms = GameObject.FindGameObjectWithTag("RotatingPlatform");
         spikeWall = GameObject.FindGameObjectWithTag("SpikeWall");
         _Start();
@@ -77,31 +80,35 @@ public class FirstPersonController : MonoBehaviour
         CheckSpikeWall();
         if (transform.position.y < -15f)
         {
-        Die();
+            Die();
         }
         checkWetherPlayerHasPassedTheLevelOrHeIsStillPlayingThisStupidGame();
     }
 
     void checkWetherPlayerHasPassedTheLevelOrHeIsStillPlayingThisStupidGame()
     {
-        if(transform.position.x > 2 || transform.position.x < - 2){
+        if (transform.position.x > 2 || transform.position.x < -2)
+        {
             return;
         }
 
-        if(transform.position.z >= 21.5f && transform.position.y >= 4.5f && rotatingPlatforms != null){
-                    SceneManager.LoadScene("Level2");
+        if (transform.position.z >= 21.5f && transform.position.y >= 4.5f && rotatingPlatforms != null)
+        {
+            SceneManager.LoadScene("Level2");
         }
-        if(transform.position.z >= 28.5f && transform.position.y >= -0.5f && spikeWall != null){
-                    SceneManager.LoadScene("MainMenu");
+        if (transform.position.z >= 28.5f && transform.position.y >= -0.5f && spikeWall != null)
+        {
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
     void CheckSpikeWall()
     {
-        if (spikeWall == null)    
+        if (spikeWall == null)
             return;
 
-        if(transform.position.z > 21){
+        if (transform.position.z > 21)
+        {
             spikeWall.GetComponent<SpikeWall>().Activate();
         }
     }
@@ -144,7 +151,7 @@ public class FirstPersonController : MonoBehaviour
 
     void CheckHiddenSpikes()
     {
-        if(Physics.CheckSphere(transform.position, spikeDetectionRadius, hiddenSpikeMask))
+        if (Physics.CheckSphere(transform.position, spikeDetectionRadius, hiddenSpikeMask))
         {
             GameObject[] hiddenSpikes = GameObject.FindGameObjectsWithTag("HiddenSpike");
             foreach (GameObject spike in hiddenSpikes)
@@ -153,7 +160,7 @@ public class FirstPersonController : MonoBehaviour
                 if (renderer != null && !renderer.enabled)
                 {
                     float distanceToSpike = Vector3.Distance(transform.position, spike.transform.position);
-                    if (distanceToSpike <= 2*spikeDetectionRadius)
+                    if (distanceToSpike <= 2 * spikeDetectionRadius)
                     {
                         renderer.enabled = true;
                         if (rotatingPlatforms != null)
@@ -168,7 +175,7 @@ public class FirstPersonController : MonoBehaviour
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.layer == LayerMask.NameToLayer("Spike") || 
+        if (hit.gameObject.layer == LayerMask.NameToLayer("Spike") ||
             hit.gameObject.layer == LayerMask.NameToLayer("HiddenSpike"))
         {
             Die();

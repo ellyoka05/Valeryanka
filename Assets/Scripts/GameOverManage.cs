@@ -11,7 +11,7 @@ public class GameOverManager : MonoBehaviour
         FirstPersonController.OnPlayerDeath += ShowGameOver;
     }
 
-   
+
     void OnDestroy()
     {
         FirstPersonController.OnPlayerDeath -= ShowGameOver;
@@ -20,6 +20,7 @@ public class GameOverManager : MonoBehaviour
     public void ShowGameOver()
     {
         gameOverPanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
     }
 
