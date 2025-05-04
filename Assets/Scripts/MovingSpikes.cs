@@ -15,7 +15,7 @@ public class MovingSpikes : MonoBehaviour
 
     void Update()
     {
-        float targetZ = Mathf.Clamp(playerTransform.position.z, 19f, 24f);
+        float targetZ = Mathf.Clamp(playerTransform.position.z, 18f, 23f);
 
         currentPosition.z = targetZ;
         transform.position = currentPosition;

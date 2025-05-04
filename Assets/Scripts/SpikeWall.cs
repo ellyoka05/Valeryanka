@@ -26,13 +26,13 @@ public class SpikeWall : MonoBehaviour
 
     IEnumerator FallSequence()
     {
-
+        // First fall - rotate and move to position 1
         yield return new WaitForSeconds(0.2f);
 
         Vector3 targetPos1 = new Vector3(0f, 1f, 23f);
         Quaternion targetRot1 = Quaternion.Euler(-90f, 0f, 0f);
         Quaternion targetRot2 = Quaternion.Euler(-180f, 0f, 0f);
-
+        
         float duration = 0.4f;
         float elapsed = 0f;
         Vector3 startPos = transform.position;
@@ -65,10 +65,10 @@ public class SpikeWall : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
 
-
+        // Second fall - move to final position
         startRot = transform.rotation;
         elapsed = 0f;
-
+        
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
@@ -77,6 +77,7 @@ public class SpikeWall : MonoBehaviour
             yield return null;
         }
 
+        // Deactivate
         gameObject.SetActive(false);
     }
 
@@ -84,7 +85,7 @@ public class SpikeWall : MonoBehaviour
     {
         Debug.Log("Activating rotating spikes");
         isActivated = true;
-        gameObject.SetActive(true);
+        gameObject.SetActive(true); 
     }
 
     public void Deactivate()

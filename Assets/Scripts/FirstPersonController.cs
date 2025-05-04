@@ -1,12 +1,14 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CharacterController))]
 
 public class FirstPersonController : MonoBehaviour
 {
-    public float moveSpeed = 7.5f;
-    public float jumpHeight = 3.5f;
-    public float gravity = -15f;
+    private float moveSpeed = 7.5f;
+    private float jumpHeight = 3f;
+    private float gravity = -45f;
     public float mouseSensitivity = 2f;
     public Transform cameraTransform;
     private float spikeDetectionRadius = 2f;
@@ -24,11 +26,14 @@ public class FirstPersonController : MonoBehaviour
     private Transform groundCheck;
 
     public delegate void PlayerDeathEvent();
-    public event PlayerDeathEvent OnPlayerDeath;
+    public static event PlayerDeathEvent OnPlayerDeath;
+
+    private GameObject spikeWall;
 
     void Start()
     {
         rotatingPlatforms = GameObject.FindGameObjectWithTag("RotatingPlatform");
+        spikeWall = GameObject.FindGameObjectWithTag("SpikeWall");
         _Start();
     }
 
@@ -45,6 +50,11 @@ public class FirstPersonController : MonoBehaviour
         if (rotatingPlatforms != null)
         {
             rotatingPlatforms.GetComponent<RotatingSpikes>().Deactivate();
+        }
+
+        if (spikeWall != null)
+        {
+            spikeWall.GetComponent<SpikeWall>().Deactivate();
         }
 
         GameObject[] hiddenSpikes = GameObject.FindGameObjectsWithTag("HiddenSpike");
@@ -64,6 +74,36 @@ public class FirstPersonController : MonoBehaviour
         HandleMouseLook();
         HandleMovement();
         CheckHiddenSpikes();
+        CheckSpikeWall();
+        if (transform.position.y < -15f)
+        {
+        Die();
+        }
+        checkWetherPlayerHasPassedTheLevelOrHeIsStillPlayingThisStupidGame();
+    }
+
+    void checkWetherPlayerHasPassedTheLevelOrHeIsStillPlayingThisStupidGame()
+    {
+        if(transform.position.x > 2 || transform.position.x < - 2){
+            return;
+        }
+
+        if(transform.position.z >= 21.5f && transform.position.y >= 4.5f && rotatingPlatforms != null){
+                    SceneManager.LoadScene("Level2");
+        }
+        if(transform.position.z >= 28.5f && transform.position.y >= -0.5f && spikeWall != null){
+                    SceneManager.LoadScene("MainMenu");
+        }
+    }
+
+    void CheckSpikeWall()
+    {
+        if (spikeWall == null)    
+            return;
+
+        if(transform.position.z > 21){
+            spikeWall.GetComponent<SpikeWall>().Activate();
+        }
     }
 
     void HandleMouseLook()

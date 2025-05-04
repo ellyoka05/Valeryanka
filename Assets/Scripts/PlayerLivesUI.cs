@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerLivesUI : MonoBehaviour
 {
@@ -18,14 +19,14 @@ public class PlayerLivesUI : MonoBehaviour
         currentLives = maxLives;
         UpdateLivesUI();
 
-        playerController.OnPlayerDeath += HandlePlayerDeath;
+        FirstPersonController.OnPlayerDeath += HandlePlayerDeath;
     }
 
     void OnDestroy()
     {
         if (playerController != null)
         {
-            playerController.OnPlayerDeath -= HandlePlayerDeath;
+            FirstPersonController.OnPlayerDeath -= HandlePlayerDeath;
         }
     }
 
@@ -38,14 +39,15 @@ public class PlayerLivesUI : MonoBehaviour
 
         if (currentLives <= 0)
         {
-            FindObjectOfType<GameOverManager>().ShowGameOver(); // Trigger Game Over
+            print("Game Over!");
+            currentLives = 3;
+            SceneManager.LoadScene("MainMenu");
         }
         else
         {
             StartCoroutine(InvulnerabilityPeriod());
         }
     }
-
 
     private System.Collections.IEnumerator InvulnerabilityPeriod()
     {

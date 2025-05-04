@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class BridgeController : MonoBehaviour
 {
-    public Transform movingBlock;       
-    public Transform centerBlock;       
-    public float radius = 3f;           
+    public Transform movingBlock;       // The block that moves (1x3 width group)
+    public Transform centerBlock;       // The block player steps on to trigger
+    public float radius = 3f;           // Arc radius for rotation (adjust to fit spacing)
     public float rotationDuration = 1f;
 
     private Transform player;
@@ -21,7 +21,7 @@ public class BridgeController : MonoBehaviour
 
     void Update()
     {
-        
+        // Check if player is on the center block
         if (!isRotating && IsPlayerOnBlock(centerBlock))
         {
             if (!playerOnCenter)
@@ -42,7 +42,7 @@ public class BridgeController : MonoBehaviour
 
     bool IsPlayerOnBlock(Transform block)
     {
-        Bounds blockBounds = new Bounds(block.position, new Vector3(3f, 1f, 1f)); 
+        Bounds blockBounds = new Bounds(block.position, new Vector3(3f, 1f, 1f)); // 3x1x1 block
         return blockBounds.Contains(new Vector3(player.position.x, block.position.y, player.position.z));
     }
 
@@ -55,7 +55,7 @@ public class BridgeController : MonoBehaviour
 
         float elapsed = 0f;
         Vector3 pivot = centerBlock.position;
-        Vector3 offsetDirection = new Vector3(0f, 0f, -radius); 
+        Vector3 offsetDirection = new Vector3(0f, 0f, -radius); // Start behind the pivot
 
         while (elapsed < rotationDuration)
         {
@@ -65,7 +65,7 @@ public class BridgeController : MonoBehaviour
 
             Vector3 newOffset = Quaternion.Euler(angle, 0f, 0f) * offsetDirection;
             movingBlock.position = pivot + newOffset;
-            movingBlock.rotation = Quaternion.identity; 
+            movingBlock.rotation = Quaternion.identity; // Keep the block level
 
             yield return null;
         }

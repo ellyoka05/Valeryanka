@@ -3,43 +3,44 @@ using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour
 {
-    public GameObject gameOverPanel; 
+    public GameObject gameOverPanel;
 
     void Start()
     {
-        gameOverPanel.SetActive(false); 
+        gameOverPanel.SetActive(false);
+
+        // Subscribe to the player death event
+        FirstPersonController.OnPlayerDeath += ShowGameOver;
     }
 
+    // Unsubscribe to prevent memory leaks
+    void OnDestroy()
+    {
+        FirstPersonController.OnPlayerDeath -= ShowGameOver;
+    }
 
     public void ShowGameOver()
     {
+        // Show the game over panel and pause the game
         gameOverPanel.SetActive(true);
-        Time.timeScale = 0f; 
+        Time.timeScale = 0f;
 
-        
-        FirstPersonController player = FindObjectOfType<FirstPersonController>();
-            if (player != null)
-            {
-                player.enabled = false; 
-            }
-        }
+        // Unlock and show cursor for UI interaction
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
 
     public void RestartGame()
     {
+        // Reset time scale and reload the current scene
         Time.timeScale = 1f;
-
-        FirstPersonController player = FindObjectOfType<FirstPersonController>();
-        if (player != null)
-        {
-            player.enabled = true;
-        }
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void ReturnToMenu()
     {
-        Time.timeScale = 1;
-        SceneManager.LoadScene("MainMenu"); 
+        // Reset time scale and load main menu
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 }
