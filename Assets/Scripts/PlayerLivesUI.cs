@@ -4,13 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLivesUI : MonoBehaviour
 {
-    public int maxLives = 3;
+    public int maxLives = 5;
     public Image[] lifeImages;
     public float respawnInvulnerabilityTime = 2f;
 
     private int currentLives;
     private FirstPersonController playerController;
     private bool isInvulnerable = false;
+
 
     void Start()
     {
@@ -20,6 +21,8 @@ public class PlayerLivesUI : MonoBehaviour
         UpdateLivesUI();
 
         FirstPersonController.OnPlayerDeath += HandlePlayerDeath;
+
+        
     }
 
     void OnDestroy()
@@ -40,7 +43,7 @@ public class PlayerLivesUI : MonoBehaviour
         if (currentLives <= 0)
         {
             print("Game Over!");
-            currentLives = 3;
+            currentLives = 5;
             SceneManager.LoadScene("MainMenu");
         }
         else

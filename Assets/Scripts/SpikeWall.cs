@@ -26,7 +26,7 @@ public class SpikeWall : MonoBehaviour
 
     IEnumerator FallSequence()
     {
-        // First fall - rotate and move to position 1
+        
         yield return new WaitForSeconds(0.2f);
 
         Vector3 targetPos1 = new Vector3(0f, 1f, 23f);
@@ -65,7 +65,7 @@ public class SpikeWall : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
 
-        // Second fall - move to final position
+        
         startRot = transform.rotation;
         elapsed = 0f;
         
@@ -77,7 +77,7 @@ public class SpikeWall : MonoBehaviour
             yield return null;
         }
 
-        // Deactivate
+        
         gameObject.SetActive(false);
     }
 

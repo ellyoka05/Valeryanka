@@ -26,7 +26,7 @@ public class RotatingSpikes : MonoBehaviour
 
     IEnumerator FallSequence()
     {
-        // First fall - rotate and move to position 1
+        
         Vector3 targetPos1 = new Vector3(0f, 5f, 11.5f);
         Quaternion targetRot1 = Quaternion.Euler(90f, 0f, 0f);
         
@@ -44,12 +44,12 @@ public class RotatingSpikes : MonoBehaviour
             yield return null;
         }
 
-        // Small jump
+       
         yield return new WaitForSeconds(0.2f);
         transform.position += Vector3.up * 0.5f;
         yield return new WaitForSeconds(0.2f);
 
-        // Second fall - move to final position
+
         Vector3 targetPos2 = new Vector3(0f, 3f, 8.5f);
         startPos = transform.position;
         elapsed = 0f;
@@ -62,7 +62,7 @@ public class RotatingSpikes : MonoBehaviour
             yield return null;
         }
 
-        // Deactivate
+
         gameObject.SetActive(false);
     }
 
